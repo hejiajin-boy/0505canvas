@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画板</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+        #canvas {
+            border: 1px solid pink;
+            width: 3000px;
+            height: 3000px;
+            background-color: #ffff;
+        }
+    </style>
+    <script>
+        canvas.onclick = (e) => {
+            // console.log(e)
+            // console 调试大法
+            console.log(e.clientX)
+            console.log(e.clientY)
+            let div = document.createElement('div')
+                // 这种方式叫做API
+                // 让当前网页创建一个标签
+            div.style.position = 'absolute'
+                // 绝对定位
+            div.style.left = e.clientX + 'px'
+                // 定位的X坐标
+            div.style.top = e.clientY + 'px'
+                // 定位的是Y的坐标
+                // div.style.border='1px solid red '
+                // 边框为红色·
+            div.style.width = '6px '
+                // 宽度6像素
+            div.style.height = '6px'
+                // 高度6像素
+            div.style.marginLeft = '-3px'
+                // 向左的外边距为-3像素
+            div.style.marginTop = '-3px'
+                // 向上的外边距的-3像素
+            div.style.borderRadius = '50%'
+                // 将方形变为圆形
+            div.style.backgroundColor = 'black'
+                // 背景颜色为黑色
+            canvas.appendChild(div)
+                // 将div 打印出来
+        }
+    </script>
+</head>
+
+<body>
+    <div id="canvas">
+
+    </div>
+
+</body>
+
+</html>
