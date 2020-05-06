@@ -19,8 +19,18 @@
             background-color: #ffff;
         }
     </style>
+
+</head>
+
+<body>
+    <div id="canvas">
+
+    </div>
     <script>
-        canvas.onclick = (e) => {
+        // canvas.onclick = (e) => {
+        // 屏幕画点
+        canvas.onmousemove = (e) => {
+            // 鼠标移动画线
             // console.log(e)
             // console 调试大法
             console.log(e.clientX)
@@ -52,13 +62,6 @@
                 // 将div 打印出来
         }
     </script>
-</head>
-
-<body>
-    <div id="canvas">
-
-    </div>
-
 </body>
 
 </html>
