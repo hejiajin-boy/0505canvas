@@ -52,10 +52,28 @@
 
         var ctx = canvas.getContext("2d");
         ctx.filStyle = "black";
-        ctx.strokeStyle = 'none'
+        // ctx.strokeStyle = 'none'
+        // 会出现拐点出现断折和不连续的情况
 
+
+        ctx.lineCap = "round";
+        // 防止拐点出现断折和不连续的情况
+
+
+
+        // 画线的写法
+        function drawLine(x1, y1, x2, y2) {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.lineWidth = 10;
+            ctx.stroke();
+        }
+        // drawLine(0, 0, 500, 500)
         let painting = false
             // 打印的初始化是不工作的
+        let last
+            // 定义一个last
 
         var isTouchDevice = 'ontouchstart' in document.documentElement;
         // 检测是否为触屏设备
@@ -66,41 +84,35 @@
                 let x = e.touches[0].clientX
                 let y = e.touches[0].clientY
                     // console.log(x, y)
-                ctx.beginPath();
-                ctx.arc(x, y, 10, 0, 2 * Math.PI);
-                ctx.stroke();
-                ctx.fill();
+                last = [x, y]
+            }
+
+
+            canvas.ontouchmove = (e) => {
+
+                let x = e.touches[0].clientX
+                let y = e.touches[0].clientY
+                drawLine(last[0], last[1], x, y)
+                last = [x, y]
+                    // 获取坐标值
             }
         } else {
-
-            canvas.onmousedown = () => {
+            canvas.onmousedown = (e) => {
                 painting = true
-                    // 鼠标按下的话开始打印
+                last = [e.clientX, e.clientY]
             }
             canvas.onmousemove = (e) => {
                 if (painting === true) {
-                    // 如果打印的是正确的取值，就开始执行
-                    // console.log(e.clientX)
-                    // console.log(e.clientY)
-                    // ctx.fillRect(e.clientX - 5, e.clientY - 5, 10, 10);
-                    // 画矩形
-                    ctx.beginPath();
-                    ctx.arc(e.clientX, e.clientY, 50, 0, 2 * Math.PI)
-                        // 圆心的位置X,Y坐标，半径  从零到360度是一个圆
-                    ctx.stroke();
-                    // 以上三行代码是画圆形
-
-                } else {
-                    // 否的话什么也不做
-                    console.log("nothing!")
+                    drawLine(last[0], last[1], e.clientX, e.clientY)
+                        // 从第一个点到最后一个点的坐标
+                    last = [e.clientX, e.clientY]
+                        // 实时更新上一次的基点
                 }
-                canvas.onmouseup = () => {
-                    painting = false
-                }
-
-
-
             }
+            canvas.onmouseup = () => {
+                painting = false
+            }
+        }
     </script>
 </body>
 
